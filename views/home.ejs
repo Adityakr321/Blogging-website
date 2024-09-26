@@ -1,0 +1,17 @@
+<%- include("partials/header"); -%>
+<h1>Home</h1>
+<p><%= startingContent %></p>
+
+<p>Explore our latest blog posts below, or dive into specific categories to find what resonates with you. Don’t forget to subscribe to get the latest updates directly in your inbox.</p>
+
+<p>Stay curious, stay inspired!"</p>
+
+<% newContent.forEach(function(content){  %>
+   <h1> <%=  content.newtitle %> </h1>
+   <p>  <%= content.newbody.substring(1, 100) + "..." %> <a href="/posts/<%= content.newtitle %>">Read more</a>  </p>
+<% });  %>
+
+<!-- Add Button to Redirect to /compose -->
+<a href="/compose" class="btn btn-primary">Add New Post</a>
+
+<%- include("partials/footer"); -%>
