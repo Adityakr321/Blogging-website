@@ -57,15 +57,22 @@ app.get("/compose",function(req,res){
 })
 
 
-app.get("/posts/:postName",function(req,res){
+app.get("/posts/:postId", function (req, res) {
+  const requestedPostId = req.params.postId;
+  Blog.findById(requestedPostId)
+    .then((foundBlog) => {
+      if (foundBlog) {
+        res.render("post", { blog: foundBlog });
+      } else {
+        res.status(404).send("Post not found");
+      }
+    })
+    .catch((err) => {
+      console.error(err);
+      res.status(500).send("Internal Server Error");
+    });
+});
 
-  const requestedTitle = _.lowerCase(req.params.postName);
-  Blog.findOne({ newtitle: { $regex: new RegExp("^" + requestedTitle + "$", "i") } })
-  .then((foundblog)=>{
-    console.log("match found!");
-    res.render("post",{blog : foundblog })
-});
-});
 
 app.post("/compose",function(req,res){
      const title = req.body.postTitle;
